@@ -3,18 +3,18 @@ import React, { useState } from 'react';
 import Image from 'next/image'
 
 export default function Home() {
-  const [window1Visible, setWindow1Visible] = useState(true);
-  const [window2Visible, setWindow2Visible] = useState(true);
+  const [songListVisible, setSongListVisible] = useState(true);
+  const [songViewVisible, setSongViewVisible] = useState(true);
   const [bothWindowsHidden, setBothWindowsHidden] = useState(true);
 
-  const toggleWindow1 = () => {
-    setWindow1Visible(!window1Visible);
-    setBothWindowsHidden(!window1Visible && !window2Visible);
+  const toggleSongList = () => {
+    setSongListVisible(!songListVisible);
+    setBothWindowsHidden(!songListVisible && !songViewVisible);
   };
 
-  const toggleWindow2 = () => {
-    setWindow2Visible(!window2Visible);
-    setBothWindowsHidden(!window1Visible && !window2Visible);
+  const toggleSongView = () => {
+    setSongViewVisible(!songViewVisible);
+    setBothWindowsHidden(!songListVisible && !songViewVisible);
   };
 
   const windowWidth = () => {
@@ -24,26 +24,26 @@ export default function Home() {
   return (
     <div className={`App`}>
       <div className="menu">
-        <button className="button" onClick={toggleWindow1}>
-          {window1Visible ? 'Hide Window 1' : 'Show Window 1'}
+        <button className="btn btn-blue" onClick={toggleSongList}>
+          {songListVisible ? 'Hide Song List' : 'Show Song List'}
         </button>
-        <button className="button" onClick={toggleWindow2}>
-          {window2Visible ? 'Hide Window 2' : 'Show Window 2'}
+        <button className="btn btn-blue" onClick={toggleSongView}>
+          {songViewVisible ? 'Hide Song View' : 'Show Song View'}
         </button>
       </div>
 
       <div className="windows">
-        {window1Visible && (
-          <div className="window" id="window1">
-            <h2>Window 1</h2>
-            {/* Content for Window 1 */}
+        {songListVisible && (
+          <div className="window" id="songList">
+            <h2>Song List</h2>
+            {/* Content for Song List */}
           </div>
         )}
 
-        {window2Visible && (
-          <div className="window" id="window2">
-            <h2>Window 2</h2>
-            {/* Content for Window 2 */}
+        {songViewVisible && (
+          <div className="window" id="songView">
+            <h2>Song View</h2>
+            {/* Content for Song View */}
           </div>
         )}
       </div>

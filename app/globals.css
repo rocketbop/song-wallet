@@ -17,11 +17,23 @@ body {
   margin: 20px;
 }
 
-.button {
+.btn {
+  @apply font-bold py-2 px-4 rounded;
+}
+.btn-blue {
+  @apply bg-blue-500 text-white;
+}
+.btn-blue:hover {
+  @apply bg-blue-700;
+}
+
+.btn {
   margin: 10px;
   padding: 10px 20px;
   font-size: 16px;
   display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .container {
@@ -34,8 +46,6 @@ body {
 }
 
 .button {
-  flex-direction: column;
-  flex-grow: 1;
   height: 10vh;
 
 }
@@ -45,7 +55,7 @@ body {
 .window {
   border: 1px solid #ccc;
   padding: 20px;
-  background-color: #f9f9f9;
+  background-color: #eee;
   border-radius: 5px;
   margin: 10px;
   height: 100%;
