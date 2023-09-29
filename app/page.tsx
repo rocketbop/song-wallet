@@ -3,37 +3,44 @@ import React, { useState } from 'react';
 import Image from 'next/image'
 
 export default function Home() {
-  const [songListVisible, setSongListVisible] = useState(false);
-  const [songViewVisible, setSongViewVisible] = useState(false);
+  const [window1Visible, setWindow1Visible] = useState(false);
+  const [window2Visible, setWindow2Visible] = useState(false);
+  const [bothWindowsHidden, setBothWindowsHidden] = useState(true);
 
-  const toggleSongList = () => {
-    setSongListVisible(!songListVisible);
+  const toggleWindow1 = () => {
+    setWindow1Visible(!window1Visible);
+    setBothWindowsHidden(!window1Visible && !window2Visible);
   };
 
-  const toggleSongView = () => {
-    setSongViewVisible(!songViewVisible);
+  const toggleWindow2 = () => {
+    setWindow2Visible(!window2Visible);
+    setBothWindowsHidden(!window1Visible && !window2Visible);
+  };
+
+  const windowWidth = () => {
+
   };
 
   return (
-    <div className="App">
-      <button onClick={toggleSongList}>
-        {songListVisible ? 'Hide Song List' : 'Show Song List'}
+    <div className={`App ${bothWindowsHidden ? 'full-width' : ''}`}>
+      <button onClick={toggleWindow1}>
+        {window1Visible ? 'Hide Window 1' : 'Show Window 1'}
       </button>
-      <button onClick={toggleSongView}>
-        {songViewVisible ? 'Hide Song View' : 'Show Song View'}
+      <button onClick={toggleWindow2}>
+        {window2Visible ? 'Hide Window 2' : 'Show Window 2'}
       </button>
 
-      {songListVisible && (
-        <div className="window" id="songList">
-          <h2>Song List</h2>
-          {/* Content for Song List */}
+      {window1Visible && (
+        <div className="window" id="window1">
+          <h2>Window 1</h2>
+          {/* Content for Window 1 */}
         </div>
       )}
 
-      {songViewVisible && (
-        <div className="window" id="songView">
-          <h2>Song View</h2>
-          {/* Content for Song View */}
+      {window2Visible && (
+        <div className="window" id="window2">
+          <h2>Window 2</h2>
+          {/* Content for Window 2 */}
         </div>
       )}
     </div>
