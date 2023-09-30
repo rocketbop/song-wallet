@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image'
 import mockData from './mockData';
+import SongExplorer from './SongExplorer.tsx';
 
 export default function Home() {
   const [songListVisible, setSongListVisible] = useState(true);
@@ -26,37 +27,25 @@ export default function Home() {
 
   return (
     <div className={`App`}>
-      <div className="menu">
-        <button className="btn btn-blue" onClick={toggleSongList}>
-          {songListVisible ? 'Hide Song List' : 'Show Song List'}
-        </button>
-        <button className="btn btn-blue" onClick={toggleSong}>
-          {songVisible ? 'Hide Song Editor' : 'Show Song Editor'}
-        </button>
-      </div>
 
-      <div className="windows">
-        {songListVisible && (
-          <div className="window" id="song-explorer-window">
-            <div className="bg-slate-50" id="song-explorer-menu">
-              <h2>Song List</h2>
-            </div>
-            <div id="song-explorer-list" className="text-left p-2">
-              <ul>
-                {songs.map((song) => (
-                  <li
-                    key={song.id}
-                    className={song.id === selectedSong.id ? 'font-bold' : ''}
-                    onClick={() => handleClickSongTitle(song)}
-                  >
-                    {song.title}
-                  </li>
-                ))}
-              </ul>
+    <div className="menu">
+    <button className="btn btn-blue" onClick={toggleSongList}>
+    {songListVisible ? 'Hide Song List' : 'Show Song List'}
+    </button>
 
-            </div>
-          </div>
-        )}
+    <button className="btn btn-blue" onClick={toggleSong}>
+    {songVisible ? 'Hide Song Editor' : 'Show Song Editor'}
+    </button>
+    </div>
+
+    <div className="windows">
+    {songListVisible && (
+      <SongExplorer
+        songs={songs}
+        selectedSong={selectedSong}
+        handleClickSongTitle={handleClickSongTitle}
+      />
+    )}
 
     {songVisible && (
       <div className="window" id="song-editor">
