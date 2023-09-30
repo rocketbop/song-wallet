@@ -8,7 +8,7 @@ export default function Home() {
   const [songViewVisible, setSongViewVisible] = useState(true);
   const [bothWindowsHidden, setBothWindowsHidden] = useState(true);
   const songs = mockData.songs;
-  const [selectedSongId, setSelectedSongId] = useState(songs[0].id);
+  const [selectedSong, setSelectedSongId] = useState(songs[0]);
 
   const toggleSongList = () => {
     setSongListVisible(!songListVisible);
@@ -43,8 +43,8 @@ export default function Home() {
               {songs.map((song) => (
                 <li
                   key={song.id}
-                  className={song.id === selectedSongId ? 'font-bold' : ''}
-                  onClick={() => handleClickSongTitle(song.id)}
+                  className={song.id === selectedSong.id ? 'font-bold' : ''}
+                  onClick={() => handleClickSongTitle(song)}
                 >
                   {song.title}
                 </li>
@@ -57,7 +57,7 @@ export default function Home() {
     {songViewVisible && (
       <div className="window" id="songView">
         <h2>Song View</h2>
-        {/* Content for Song View */}
+        <h3>{selectedSong.title}</h3>
       </div>
     )}
       </div>
