@@ -9,7 +9,8 @@ export default function Home() {
   const [songVisible, setSongVisible] = useState(true);
   const [bothWindowsHidden, setBothWindowsHidden] = useState(true);
   const songs = mockData.songs;
-  const [selectedSong, setSelectedSongId] = useState(songs[0]);
+  const [selectedSong, setSelectedSong] = useState(songs[0]);
+  const [editorContent, setEditorContent] = useState(songs[0].text);
 
   const toggleSongList = () => {
     setSongListVisible(!songListVisible);
@@ -21,8 +22,9 @@ export default function Home() {
     setBothWindowsHidden(!songListVisible && !songVisible);
   };
 
-  const handleClickSongTitle = (songId) => {
-    setSelectedSongId(songId);
+  const handleClickSongTitle = (song) => {
+    setSelectedSong(song);
+    setEditorContent(song.text)
   };
 
   return (
@@ -51,9 +53,13 @@ export default function Home() {
       <div className="window" id="song-editor">
         <h2>Song Editor</h2>
         <h3>{selectedSong.title}</h3>
+        <textarea
+          value={editorContent}
+          onChange={e => setEditorContent(e.target.value)}>
+        </textarea>
       </div>
     )}
-      </div>
+    </div>
     </div>
   );
 }
