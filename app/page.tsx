@@ -1,11 +1,14 @@
 "use client";
 import React, { useState } from 'react';
 import Image from 'next/image'
+import mockData from './mockData';
 
 export default function Home() {
   const [songListVisible, setSongListVisible] = useState(true);
   const [songViewVisible, setSongViewVisible] = useState(true);
   const [bothWindowsHidden, setBothWindowsHidden] = useState(true);
+  const songs = mockData.songs;
+  const [selectedSongId, setSelectedSongId] = useState(songs[0].id);
 
   const toggleSongList = () => {
     setSongListVisible(!songListVisible);
@@ -17,8 +20,8 @@ export default function Home() {
     setBothWindowsHidden(!songListVisible && !songViewVisible);
   };
 
-  const windowWidth = () => {
-
+  const handleClickSongTitle = (songId) => {
+    setSelectedSongId(songId);
   };
 
   return (
@@ -36,16 +39,27 @@ export default function Home() {
         {songListVisible && (
           <div className="window" id="songList">
             <h2>Song List</h2>
-            {/* Content for Song List */}
+            <ul>
+              {songs.map((song) => (
+                <li
+                  key={song.id}
+                  className={song.id === selectedSongId ? 'font-bold' : ''}
+                  onClick={() => handleClickSongTitle(song.id)}
+                >
+                  {song.title}
+                </li>
+              ))}
+            </ul>
+
           </div>
         )}
 
-        {songViewVisible && (
-          <div className="window" id="songView">
-            <h2>Song View</h2>
-            {/* Content for Song View */}
-          </div>
-        )}
+    {songViewVisible && (
+      <div className="window" id="songView">
+        <h2>Song View</h2>
+        {/* Content for Song View */}
+      </div>
+    )}
       </div>
     </div>
   );

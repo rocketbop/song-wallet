@@ -1,8 +1,25 @@
 @tailwind base;
+
+@layer base {
+  h1 {
+    @apply text-2xl;
+  }
+  h2 {
+    @apply text-xl font-semibold pb-2;
+  }
+  h3 {
+    @apply text-lg;
+  }
+  a {
+    @apply text-blue-600 underline;
+  }
+}
+
 @tailwind components;
 @tailwind utilities;
 
 body {
+  box-sizing: border-box;
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -36,11 +53,6 @@ body {
   flex-grow: 1;
 }
 
-.container {
-  display: flex;
-  height: 100vh;
-}
-
 .menu {
   display: flex;
 }
@@ -51,6 +63,8 @@ body {
 }
 .windows {
   display: flex;
+  height: 80vh;
+
 }
 .window {
   border: 1px solid #ccc;
@@ -62,7 +76,6 @@ body {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  height: 80vh;
 }
 
 /* Apply full-width style to the visible window */
