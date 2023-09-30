@@ -51,6 +51,7 @@ body {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  flex: 1;
 }
 
 .menu {
@@ -63,6 +64,7 @@ body {
 }
 .windows {
   display: flex;
+  flex-wrap: nowrap;
   height: 80vh;
 
 }
@@ -74,6 +76,7 @@ body {
   margin: 10px;
   height: 100%;
   display: flex;
+  flex: 1;
   flex-direction: column;
   flex-grow: 1;
 }
