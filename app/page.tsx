@@ -5,19 +5,19 @@ import mockData from './mockData';
 
 export default function Home() {
   const [songListVisible, setSongListVisible] = useState(true);
-  const [songViewVisible, setSongViewVisible] = useState(true);
+  const [songVisible, setSongVisible] = useState(true);
   const [bothWindowsHidden, setBothWindowsHidden] = useState(true);
   const songs = mockData.songs;
   const [selectedSong, setSelectedSongId] = useState(songs[0]);
 
   const toggleSongList = () => {
     setSongListVisible(!songListVisible);
-    setBothWindowsHidden(!songListVisible && !songViewVisible);
+    setBothWindowsHidden(!songListVisible && !songVisible);
   };
 
-  const toggleSongView = () => {
-    setSongViewVisible(!songViewVisible);
-    setBothWindowsHidden(!songListVisible && !songViewVisible);
+  const toggleSong = () => {
+    setSongVisible(!songVisible);
+    setBothWindowsHidden(!songListVisible && !songVisible);
   };
 
   const handleClickSongTitle = (songId) => {
@@ -30,33 +30,37 @@ export default function Home() {
         <button className="btn btn-blue" onClick={toggleSongList}>
           {songListVisible ? 'Hide Song List' : 'Show Song List'}
         </button>
-        <button className="btn btn-blue" onClick={toggleSongView}>
-          {songViewVisible ? 'Hide Song View' : 'Show Song View'}
+        <button className="btn btn-blue" onClick={toggleSong}>
+          {songVisible ? 'Hide Song Editor' : 'Show Song Editor'}
         </button>
       </div>
 
       <div className="windows">
         {songListVisible && (
-          <div className="window" id="songList">
-            <h2>Song List</h2>
-            <ul>
-              {songs.map((song) => (
-                <li
-                  key={song.id}
-                  className={song.id === selectedSong.id ? 'font-bold' : ''}
-                  onClick={() => handleClickSongTitle(song)}
-                >
-                  {song.title}
-                </li>
-              ))}
-            </ul>
+          <div className="window" id="song-explorer-window">
+            <div className="bg-slate-50" id="song-explorer-menu">
+              <h2>Song List</h2>
+            </div>
+            <div id="song-explorer-list" className="text-left p-2">
+              <ul>
+                {songs.map((song) => (
+                  <li
+                    key={song.id}
+                    className={song.id === selectedSong.id ? 'font-bold' : ''}
+                    onClick={() => handleClickSongTitle(song)}
+                  >
+                    {song.title}
+                  </li>
+                ))}
+              </ul>
 
+            </div>
           </div>
         )}
 
-    {songViewVisible && (
-      <div className="window" id="songView">
-        <h2>Song View</h2>
+    {songVisible && (
+      <div className="window" id="song-editor">
+        <h2>Song Editor</h2>
         <h3>{selectedSong.title}</h3>
       </div>
     )}
