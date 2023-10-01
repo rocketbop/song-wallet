@@ -93,3 +93,11 @@ h2 {
 textarea {
   height: 100%;
 }
+
+#song-editor {
+  overflow: scroll;
+}
+
+.chord {
+  color: blue;
+}

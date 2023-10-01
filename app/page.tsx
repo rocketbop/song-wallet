@@ -1,8 +1,11 @@
 "use client";
 import React, { useState } from 'react';
+import ContentEditable from 'react-contenteditable';
+import sanitizeHtml from "sanitize-html"
 import Image from 'next/image'
 import mockData from './mockData';
 import SongExplorer from './SongExplorer.tsx';
+import { songproToHtml } from './parser.ts';
 
 export default function Home() {
   const [songListVisible, setSongListVisible] = useState(true);
@@ -10,7 +13,7 @@ export default function Home() {
   const [bothWindowsHidden, setBothWindowsHidden] = useState(true);
   const songs = mockData.songs;
   const [selectedSong, setSelectedSong] = useState(songs[0]);
-  const [editorContent, setEditorContent] = useState(songs[0].text);
+  const [editorHtml, setEditorHtml] = useState(songproToHtml(songs[0].text))
 
   const toggleSongList = () => {
     setSongListVisible(!songListVisible);
@@ -23,10 +26,19 @@ export default function Home() {
   };
 
   const handleClickSongTitle = (song) => {
+    console.log(song)
     setSelectedSong(song);
-    setEditorContent(song.text)
+    setEditorHtml(songproToHtml(song.text))
   };
 
+  const handleEditorHtmlChange = React.useCallback(evt => {
+		const sanitizeConf = {
+			allowedTags: ["b", "i", "a", "p", "span", "br"],
+			allowedAttributes: { a: ["href"] }
+		};
+
+		setEditorHtml(sanitizeHtml(evt.currentTarget.innerHTML, sanitizeConf))
+	}, [])
   return (
     <div className={`App`}>
 
@@ -53,13 +65,14 @@ export default function Home() {
       <div className="window" id="song-editor">
         <h2>Song Editor</h2>
         <h3>{selectedSong.title}</h3>
-        <textarea
-          value={editorContent}
-          onChange={e => setEditorContent(e.target.value)}>
-        </textarea>
-      </div>
+        <ContentEditable
+          className="text-left"
+          html={editorHtml}
+          onChange={handleEditorHtmlChange}
+        />
+        </div>
     )}
-    </div>
+      </div>
     </div>
   );
 }
