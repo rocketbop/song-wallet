@@ -1,10 +1,8 @@
-import React from 'react';
+import React from 'react'
 
 export function Editable({ songRaw, editorRef }) {
   return (
-    <pre
-      ref={editorRef}
-    >
+    <pre ref={editorRef}>
       {songRaw.split(/\r?\n/).map((content, i, arr) => (
         <React.Fragment key={i}>
           <span style={{ color: `hsl(${((i % 20) * 17) | 0}, 80%, 50%)` }}>
@@ -15,4 +13,4 @@ export function Editable({ songRaw, editorRef }) {
       ))}
     </pre>
   )
-};
+}

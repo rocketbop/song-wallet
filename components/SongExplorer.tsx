@@ -16,10 +16,9 @@ function SongExplorer({ songs, selectedSong, handleClickSongTitle }) {
             </li>
           ))}
         </ul>
-
       </div>
     </div>
   )
 }
 
-export default SongExplorer;
+export default SongExplorer

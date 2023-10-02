@@ -49,14 +49,14 @@ const mockData = {
     {
       id: 1,
       title: 'Greensleeves',
-      text: greensleeves
+      text: greensleeves,
     },
     {
       id: 2,
       title: 'She Moved Through the Fair',
-      text: ''
+      text: '',
     },
-  ]
+  ],
 }
 
-export default mockData;
+export default mockData
