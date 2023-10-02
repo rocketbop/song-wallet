@@ -1,11 +1,9 @@
 "use client";
-import React, { useState } from 'react';
-import ContentEditable from 'react-contenteditable';
-import sanitizeHtml from "sanitize-html"
-import Image from 'next/image'
+import React, { useState, useRef } from 'react';
+import Image from 'next/image';
 import mockData from './mockData';
 import SongExplorer from './SongExplorer.tsx';
-import { songproToHtml } from './parser.ts';
+import { useEditable } from 'use-editable';
 
 export default function Home() {
   const [songListVisible, setSongListVisible] = useState(true);
@@ -13,7 +11,11 @@ export default function Home() {
   const [bothWindowsHidden, setBothWindowsHidden] = useState(true);
   const songs = mockData.songs;
   const [selectedSong, setSelectedSong] = useState(songs[0]);
-  const [editorHtml, setEditorHtml] = useState(songproToHtml(songs[0].text))
+
+  const [songRaw, setSongRaw] = useState(songs[0].text)
+  const editorRef = useRef(null);
+
+  useEditable(editorRef, setSongRaw);
 
   const toggleSongList = () => {
     setSongListVisible(!songListVisible);
@@ -26,19 +28,10 @@ export default function Home() {
   };
 
   const handleClickSongTitle = (song) => {
-    console.log(song)
     setSelectedSong(song);
-    setEditorHtml(songproToHtml(song.text))
+    setSongRaw(song.text);
   };
 
-  const handleEditorHtmlChange = React.useCallback(evt => {
-		const sanitizeConf = {
-			allowedTags: ["b", "i", "a", "p", "span", "br"],
-			allowedAttributes: { a: ["href"] }
-		};
-
-		setEditorHtml(sanitizeHtml(evt.currentTarget.innerHTML, sanitizeConf))
-	}, [])
   return (
     <div className={`App`}>
 
@@ -65,12 +58,21 @@ export default function Home() {
       <div className="window" id="song-editor">
         <h2>Song Editor</h2>
         <h3>{selectedSong.title}</h3>
-        <ContentEditable
-          className="text-left"
-          html={editorHtml}
-          onChange={handleEditorHtmlChange}
-        />
+
+        <pre
+          ref={editorRef}
+        >
+          {songRaw.split(/\r?\n/).map((content, i, arr) => (
+            <React.Fragment key={i}>
+              <span style={{ color: `hsl(${((i % 20) * 17) | 0}, 80%, 50%)` }}>
+                {content}
+              </span>
+              {i < arr.length - 1 ? '\n' : null}
+            </React.Fragment>
+          ))}
+        </pre>
         </div>
+
     )}
       </div>
     </div>

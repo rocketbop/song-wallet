@@ -101,3 +101,9 @@ textarea {
 .chord {
   color: blue;
 }
+
+pre {
+  whiteSpace: 'pre-wrap';
+  fontFamily: 'monospace';
+  text-align: left;
+}
