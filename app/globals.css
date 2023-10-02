@@ -93,3 +93,17 @@ h2 {
 textarea {
   height: 100%;
 }
+
+#song-editor {
+  overflow: scroll;
+}
+
+.chord {
+  color: blue;
+}
+
+pre {
+  whiteSpace: 'pre-wrap';
+  fontFamily: 'monospace';
+  text-align: left;
+}

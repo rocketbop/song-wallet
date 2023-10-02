@@ -1,8 +1,9 @@
 "use client";
-import React, { useState } from 'react';
-import Image from 'next/image'
+import React, { useState, useRef } from 'react';
+import Image from 'next/image';
 import mockData from './mockData';
 import SongExplorer from './SongExplorer.tsx';
+import { useEditable } from 'use-editable';
 
 export default function Home() {
   const [songListVisible, setSongListVisible] = useState(true);
@@ -10,7 +11,11 @@ export default function Home() {
   const [bothWindowsHidden, setBothWindowsHidden] = useState(true);
   const songs = mockData.songs;
   const [selectedSong, setSelectedSong] = useState(songs[0]);
-  const [editorContent, setEditorContent] = useState(songs[0].text);
+
+  const [songRaw, setSongRaw] = useState(songs[0].text)
+  const editorRef = useRef(null);
+
+  useEditable(editorRef, setSongRaw);
 
   const toggleSongList = () => {
     setSongListVisible(!songListVisible);
@@ -24,7 +29,7 @@ export default function Home() {
 
   const handleClickSongTitle = (song) => {
     setSelectedSong(song);
-    setEditorContent(song.text)
+    setSongRaw(song.text);
   };
 
   return (
@@ -53,13 +58,23 @@ export default function Home() {
       <div className="window" id="song-editor">
         <h2>Song Editor</h2>
         <h3>{selectedSong.title}</h3>
-        <textarea
-          value={editorContent}
-          onChange={e => setEditorContent(e.target.value)}>
-        </textarea>
-      </div>
+
+        <pre
+          ref={editorRef}
+        >
+          {songRaw.split(/\r?\n/).map((content, i, arr) => (
+            <React.Fragment key={i}>
+              <span style={{ color: `hsl(${((i % 20) * 17) | 0}, 80%, 50%)` }}>
+                {content}
+              </span>
+              {i < arr.length - 1 ? '\n' : null}
+            </React.Fragment>
+          ))}
+        </pre>
+        </div>
+
     )}
-    </div>
+      </div>
     </div>
   );
 }
