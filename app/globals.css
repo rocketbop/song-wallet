@@ -60,13 +60,11 @@ body {
 
 .button {
   height: 10vh;
-
 }
 .windows {
   display: flex;
   flex-wrap: nowrap;
   height: 80vh;
-
 }
 .window {
   border: 1px solid #ccc;
@@ -103,7 +101,7 @@ textarea {
 }
 
 pre {
-  whiteSpace: 'pre-wrap';
-  fontFamily: 'monospace';
+  whitespace: 'pre-wrap';
+  fontfamily: 'monospace';
   text-align: left;
 }
