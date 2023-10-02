@@ -1,9 +1,10 @@
 "use client";
 import React, { useState, useRef } from 'react';
 import Image from 'next/image';
-import mockData from './mockData';
-import SongExplorer from './SongExplorer.tsx';
 import { useEditable } from 'use-editable';
+import mockData from './mockData';
+import SongExplorer from '@/components/SongExplorer.tsx';
+import { Editable } from '@/components/Editable'
 
 export default function Home() {
   const [songListVisible, setSongListVisible] = useState(true);
@@ -58,21 +59,8 @@ export default function Home() {
       <div className="window" id="song-editor">
         <h2>Song Editor</h2>
         <h3>{selectedSong.title}</h3>
-
-        <pre
-          ref={editorRef}
-        >
-          {songRaw.split(/\r?\n/).map((content, i, arr) => (
-            <React.Fragment key={i}>
-              <span style={{ color: `hsl(${((i % 20) * 17) | 0}, 80%, 50%)` }}>
-                {content}
-              </span>
-              {i < arr.length - 1 ? '\n' : null}
-            </React.Fragment>
-          ))}
-        </pre>
+        <Editable songRaw={songRaw} editorRef={editorRef} />
         </div>
-
     )}
       </div>
     </div>
