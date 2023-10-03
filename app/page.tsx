@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useCallback } from 'react'
 import { useEditable } from 'use-editable'
 import mockData from './mockData'
 import SongExplorer from '@/components/SongExplorer'
@@ -14,16 +14,23 @@ export default function Home() {
   const [songRaw, setSongRaw] = useState(songs[0].text)
   const editorRef = useRef(null)
 
-  useEditable(editorRef, setSongRaw)
+  const onEditableChange = useCallback((songRaw) => {
+    setSongRaw(songRaw.slice(0, -1));
+  }, []);
+
+  useEditable(editorRef, onEditableChange, {
+    disabled: false,
+    indentation: 2
+  })
 
   const toggleSongList = () => {
     setSongListVisible(!songListVisible)
-    setBothWindowsHidden(!songListVisible && !songVisible)
+    // setBothWindowsHidden(!songListVisible && !songVisible)
   }
 
   const toggleSong = () => {
     setSongVisible(!songVisible)
-    setBothWindowsHidden(!songListVisible && !songVisible)
+    // setBothWindowsHidden(!songListVisible && !songVisible)
   }
 
   const handleClickSongTitle = (song) => {

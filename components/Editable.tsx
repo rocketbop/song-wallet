@@ -1,16 +1,25 @@
 import React from 'react'
+import { Highlight, themes } from 'prism-react-renderer';
 
 export function Editable({ songRaw, editorRef }) {
   return (
-    <pre ref={editorRef}>
-      {songRaw.split(/\r?\n/).map((content, i, arr) => (
-        <React.Fragment key={i}>
-          <span style={{ color: `hsl(${((i % 20) * 17) | 0}, 80%, 50%)` }}>
-            {content}
-          </span>
-          {i < arr.length - 1 ? '\n' : null}
-        </React.Fragment>
-      ))}
-    </pre>
+    <Highlight
+    theme={themes.duotoneDark}
+    code={songRaw}
+    language="javascript"
+  >
+    {({ className, style, tokens, getLineProps, getTokenProps }) => (
+      <pre style={style} ref={editorRef}>
+        {tokens.map((line, i) => (
+          <div key={i} {...getLineProps({ line })}>
+            {line.map((token, key) => (
+              <span key={key} {...getTokenProps({ token })} />
+            ))}
+            {i < line.length - 1 ? '\n' : null}
+          </div>
+        ))}
+      </pre>
+    )}
+    </Highlight>
   )
 }

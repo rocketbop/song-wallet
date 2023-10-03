@@ -44,6 +44,9 @@ See www.linkesoft.com/songbook for details.
 {tag: Sample}
 {time: 2:30}`
 
+const js = `var x = 1;
+var y = 2;
+`
 const mockData = {
   songs: [
     {
