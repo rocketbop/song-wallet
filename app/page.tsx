@@ -2,7 +2,7 @@
 import React, { useState, useRef } from 'react'
 import { useEditable } from 'use-editable'
 import mockData from './mockData'
-import SongExplorer from '@/components/SongExplorer.tsx'
+import SongExplorer from '@/components/SongExplorer'
 import { Editable } from '@/components/Editable'
 
 export default function Home() {
