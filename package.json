@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "next": "latest",
+    "prism-react-renderer": "^2.1.0",
     "react": "latest",
     "react-dom": "latest",
     "sanitize-html": "^2.11.0",
