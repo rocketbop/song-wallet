@@ -15,12 +15,12 @@ export default function Home() {
   const editorRef = useRef(null)
 
   const onEditableChange = useCallback((songRaw) => {
-    setSongRaw(songRaw.slice(0, -1));
-  }, []);
+    setSongRaw(songRaw.slice(0, -1))
+  }, [])
 
   useEditable(editorRef, onEditableChange, {
     disabled: false,
-    indentation: 2
+    indentation: 2,
   })
 
   const toggleSongList = () => {
