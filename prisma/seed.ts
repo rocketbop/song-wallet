@@ -1,3 +1,7 @@
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
 const greensleeves = `# Greensleeves Sample Song for SongBook
 {t:Greensleeves}
 {st:Sample}
@@ -44,22 +48,27 @@ See www.linkesoft.com/songbook for details.
 {tag: Sample}
 {time: 2:30}`
 
-const js = `var x = 1;
-var y = 2;
-`
-const mockData = {
-  songs: [
-    {
-      id: 1,
+async function main() {
+  await prisma.song.create({
+    data: {
       title: 'Greensleeves',
       text: greensleeves,
     },
-    {
-      id: 2,
+  })
+  await prisma.song.create({
+    data: {
       title: 'She Moved Through the Fair',
       text: '',
     },
-  ],
+  })
 }
 
-export default mockData
+main()
+  .then(async () => {
+    await prisma.$disconnect()
+  })
+  .catch(async (e) => {
+    console.error(e)
+    await prisma.$disconnect()
+    process.exit(1)
+  })
