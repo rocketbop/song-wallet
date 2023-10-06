@@ -6,11 +6,13 @@ import { Editable } from '@/components/Editable'
 import { ToggleButton } from './ToggleButton'
 
 import { Song } from '@prisma/client'
+import { NewSongForm } from './NewSongForm'
 
 export default function Window({ songs }: { songs: Array<Song> }) {
   const [songListVisible, setSongListVisible] = useState(true)
   const [songVisible, setSongVisible] = useState(true)
   const [selectedSong, setSelectedSong] = useState(songs[0])
+  const [newSongFormVisible, setNewSongFormVisible] = useState(false)
 
   const [songRaw, setSongRaw] = useState(songs[0].text)
   const editorRef = useRef(null)
@@ -37,6 +39,13 @@ export default function Window({ songs }: { songs: Array<Song> }) {
     setSongRaw(song.text)
   }
 
+  const newSongButtonClicked = () => {
+    const formShouldBeVisible = !newSongFormVisible
+    setNewSongFormVisible(formShouldBeVisible)
+    setSongListVisible(!formShouldBeVisible)
+    setSongVisible(!formShouldBeVisible)
+  }
+
   return (
     <div className={`App`}>
       <div className="menu">
@@ -51,6 +60,14 @@ export default function Window({ songs }: { songs: Array<Song> }) {
           visible={songVisible}
           onClick={toggleSong}
         />
+        <button
+          className={`btn btn-wide mx-1 ${
+            newSongFormVisible ? 'btn-disabled' : 'btn-active'
+          }`}
+          onClick={newSongButtonClicked}
+        >
+          New Song
+        </button>
       </div>
       <div className="windows">
         {songListVisible && (
@@ -68,6 +85,8 @@ export default function Window({ songs }: { songs: Array<Song> }) {
             <Editable songRaw={songRaw} editorRef={editorRef} />
           </div>
         )}
+
+        {newSongFormVisible && <NewSongForm />}
       </div>
     </div>
   )
