@@ -39,11 +39,21 @@ export default function Window({ songs }: { songs: Array<Song> }) {
   return (
     <div className={`App`}>
       <div className="menu">
-        <button className="btn btn-blue" onClick={toggleSongList}>
+        <button
+          className={`btn btn-wide mx-1 ${
+            songListVisible ? 'btn-primary' : 'btn-secondary'
+          }`}
+          onClick={toggleSongList}
+        >
           {songListVisible ? 'Hide Song List' : 'Show Song List'}
         </button>
 
-        <button className="btn btn-blue" onClick={toggleSong}>
+        <button
+          className={`btn btn-wide mx-1 ${
+            songVisible ? 'btn-primary' : 'btn-secondary'
+          }`}
+          onClick={toggleSong}
+        >
           {songVisible ? 'Hide Song Editor' : 'Show Song Editor'}
         </button>
       </div>
