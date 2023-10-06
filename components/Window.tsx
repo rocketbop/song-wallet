@@ -3,6 +3,7 @@ import React, { useState, useRef, useCallback } from 'react'
 import { useEditable } from 'use-editable'
 import SongExplorer from '@/components/SongExplorer'
 import { Editable } from '@/components/Editable'
+import { ToggleButton } from './ToggleButton'
 
 import { Song } from '@prisma/client'
 
@@ -39,25 +40,18 @@ export default function Window({ songs }: { songs: Array<Song> }) {
   return (
     <div className={`App`}>
       <div className="menu">
-        <button
-          className={`btn btn-wide mx-1 ${
-            songListVisible ? 'btn-primary' : 'btn-secondary'
-          }`}
+        <ToggleButton
+          label="Song List"
+          visible={songListVisible}
           onClick={toggleSongList}
-        >
-          {songListVisible ? 'Hide Song List' : 'Show Song List'}
-        </button>
+        />
 
-        <button
-          className={`btn btn-wide mx-1 ${
-            songVisible ? 'btn-primary' : 'btn-secondary'
-          }`}
+        <ToggleButton
+          label="Song Editor"
+          visible={songVisible}
           onClick={toggleSong}
-        >
-          {songVisible ? 'Hide Song Editor' : 'Show Song Editor'}
-        </button>
+        />
       </div>
-
       <div className="windows">
         {songListVisible && (
           <SongExplorer
