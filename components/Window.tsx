@@ -34,7 +34,7 @@ export default function Window({ songs }: { songs: Array<Song> }) {
     setSongVisible(!songVisible)
   }
 
-  const handleClickSongTitle = (song) => {
+  const handleClickSongTitle = (song: any) => {
     setSelectedSong(song)
     setSongRaw(song.text)
   }
@@ -44,6 +44,21 @@ export default function Window({ songs }: { songs: Array<Song> }) {
     setNewSongFormVisible(formShouldBeVisible)
     setSongListVisible(!formShouldBeVisible)
     setSongVisible(!formShouldBeVisible)
+  }
+
+  const handleSaveClick = async (formData: any) => {
+    const _response = await fetch(`/api/song`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        title: formData.title,
+      }),
+    })
+    setNewSongFormVisible(false)
+    setSongListVisible(!songListVisible)
+    setSongVisible(!songVisible)
   }
 
   return (
@@ -86,7 +101,7 @@ export default function Window({ songs }: { songs: Array<Song> }) {
           </div>
         )}
 
-        {newSongFormVisible && <NewSongForm />}
+        {newSongFormVisible && <NewSongForm onSaveClick={handleSaveClick} />}
       </div>
     </div>
   )

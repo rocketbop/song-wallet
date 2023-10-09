@@ -1,6 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-export function NewSongForm() {
+interface NewSongFormProps {
+  onSaveClick: (formData: any) => void
+}
+
+export function NewSongForm({ onSaveClick }: NewSongFormProps) {
+  const [formData, setFormData] = useState({
+    title: '',
+    artist: '',
+  })
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target
+    setFormData({ ...formData, [name]: value })
+  }
+
+  const onSubmit = (event: any) => {
+    event.preventDefault()
+    onSaveClick(formData)
+  }
+
   return (
     <form className="max-w-md mx-auto mt-4 p-4 bg-white shadow-md rounded-lg">
       <div className="mb-4">
@@ -14,6 +33,8 @@ export function NewSongForm() {
           type="text"
           id="title"
           name="title"
+          value={formData.title}
+          onChange={handleInputChange}
           placeholder="Enter the title"
         />
       </div>
@@ -21,7 +42,9 @@ export function NewSongForm() {
       <div className="flex justify-end">
         <button className="btn btn-secondary mr-2 p-2">Cancel</button>
 
-        <button className="btn btn-primary mr-2 p-2">Save</button>
+        <button onClick={onSubmit} className="btn btn-primary mr-2 p-2">
+          Save
+        </button>
       </div>
     </form>
   )
